@@ -2,9 +2,13 @@
 
 namespace App\Nova;
 
+use App\Nova\Metrics\UsersByRole;
+use App\Nova\Metrics\UsersPerDay;
 use Illuminate\Http\Request;
 use Laravel\Nova\Auth\PasswordValidationRules;
+use Laravel\Nova\Fields\Email;
 use Laravel\Nova\Fields\Gravatar;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Password;
 use Laravel\Nova\Fields\Select;
@@ -56,7 +60,7 @@ class User extends Resource
                 ->sortable()
                 ->rules('required', 'max:255'),
 
-            Text::make('Email')
+            Email::make('Email')
                 ->sortable()
                 ->rules('required', 'email', 'max:254')
                 ->creationRules('unique:users,email')
@@ -67,8 +71,10 @@ class User extends Resource
                 ->creationRules($this->passwordRules())
                 ->updateRules($this->optionalPasswordRules())
                 ->onlyOnForms(),
+
             Select::make('Role')->options(['buyer' => 'Buyer', 'seller' => 'Seller', 'admin' => 'Admin'])->displayUsingLabels(),
-            // HasMany::make('Cars'),
+
+            HasMany::make('Cars'),
         ];
     }
 
@@ -79,7 +85,10 @@ class User extends Resource
      */
     public function cards(NovaRequest $request): array
     {
-        return [];
+        return [
+            new UsersByRole(),
+            (new UsersPerDay())->width('2/3'),
+        ];
     }
 
     /**

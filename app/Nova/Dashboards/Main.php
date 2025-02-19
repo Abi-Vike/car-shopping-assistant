@@ -2,6 +2,7 @@
 
 namespace App\Nova\Dashboards;
 
+use App\Nova\Metrics\AverageCarPrice;
 use Laravel\Nova\Cards\Help;
 use Laravel\Nova\Dashboards\Main as Dashboard;
 
@@ -15,7 +16,12 @@ class Main extends Dashboard
     public function cards(): array
     {
         return [
-            new Help,
+            (new \App\Nova\Metrics\AverageCarPrice())->width('1/2'),
+            (new \App\Nova\Metrics\CarsByFuelType())->width('1/2'),
+            (new \App\Nova\Metrics\CarsByLocation())->width('1/2'),
+            (new \App\Nova\Metrics\TotalCars())->width('1/2'),
+            (new \App\Nova\Metrics\UsersByRole())->width('1/3'),
+            (new \App\Nova\Metrics\UsersPerDay())->width('2/3'),
         ];
     }
 }

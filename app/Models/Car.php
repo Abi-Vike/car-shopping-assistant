@@ -33,6 +33,7 @@ class Car extends Model
 
     protected $casts = [
         'embedding' => 'array', // Cast the embedding column to an array
+        'year' => 'integer',
     ];
 
     public function owner()

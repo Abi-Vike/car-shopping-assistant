@@ -2,6 +2,9 @@
 
 namespace App\Nova;
 
+use App\Nova\Metrics\CarsByFuelType;
+use App\Nova\Metrics\CarsByLocation;
+use App\Nova\Metrics\TotalCars;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
@@ -39,6 +42,11 @@ class Car extends Resource
      */
     public static $search = [
         'id',
+        'name',
+        'description',
+        'make',
+        'model',
+        'year',
     ];
 
     /**
@@ -64,6 +72,7 @@ class Car extends Resource
             Select::make('Transmission')->options(['manual' => 'Manual', 'automatic' => 'Automatic']),
             Select::make('Location')->options([
                 'Addis Ababa' => 'Addis Ababa',
+                'Jimma' => 'Jimma',
                 'Dire Dawa' => 'Dire Dawa',
                 'Hawassa' => 'Hawassa',
                 'Mekelle' => 'Mekelle',
@@ -83,7 +92,11 @@ class Car extends Resource
      */
     public function cards(NovaRequest $request): array
     {
-        return [];
+        return [
+            new TotalCars(),
+            new CarsByLocation(),
+            new CarsByFuelType(),
+        ];
     }
 
     /**
