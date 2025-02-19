@@ -7,6 +7,7 @@ use Laravel\Nova\Auth\PasswordValidationRules;
 use Laravel\Nova\Fields\Gravatar;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Password;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
@@ -34,7 +35,9 @@ class User extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'name', 'email',
+        'id',
+        'name',
+        'email',
     ];
 
     /**
@@ -62,7 +65,10 @@ class User extends Resource
             Password::make('Password')
                 ->onlyOnForms()
                 ->creationRules($this->passwordRules())
-                ->updateRules($this->optionalPasswordRules()),
+                ->updateRules($this->optionalPasswordRules())
+                ->onlyOnForms(),
+            Select::make('Role')->options(['buyer' => 'Buyer', 'seller' => 'Seller', 'admin' => 'Admin'])->displayUsingLabels(),
+            // HasMany::make('Cars'),
         ];
     }
 
