@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name'); // e.g., "Toyota Corolla"
             $table->text('description')->nullable();
-            $table->json('images')->nullable(); // Store array of image URLs or paths
+            $table->text('images')->nullable(); // Store array of image URLs or paths
             $table->decimal('price', 8, 2); // Price in Ethiopian Birr (ETB)
             $table->enum('fuel_type', ['electric', 'gas', 'diesel'])->default('gas'); // Added diesel for Ethiopian market
             $table->integer('seating_capacity'); // e.g., 5, 7, 8

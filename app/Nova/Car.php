@@ -60,7 +60,9 @@ class Car extends Resource
             ID::make()->sortable(),
             Text::make('Name'),
             Textarea::make('Description'),
-            Image::make('Images')->disk('public')->path('cars'),
+            Image::make('Images')->disk('public')
+            // ->path('cars')
+            ,
             Currency::make('Price', 'price')->currency('ETB')->sortable(), // Ethiopian Birr
             Select::make('Fuel Type', 'fuel_type')->options(['electric' => 'Electric', 'gas' => 'Gas', 'diesel' => 'Diesel']),
             Number::make('Seating Capacity', 'seating_capacity'),
@@ -81,7 +83,7 @@ class Car extends Resource
             Boolean::make('Four Wheel Drive', 'four_wheel_drive'),
             Number::make('Mileage (km)', 'mileage'),
             BelongsTo::make('Owner', 'owner', User::class),
-            Textarea::make('Embedding', 'embedding')->onlyOnDetail(), // View only
+            Text::make('Embedding', 'embedding')->onlyOnDetail(), // View only
         ];
     }
 

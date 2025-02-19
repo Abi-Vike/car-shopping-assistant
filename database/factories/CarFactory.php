@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\File;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Car>
@@ -17,9 +18,17 @@ class CarFactory extends Factory
      */
     public function definition(): array
     {
+
+        $carImagesDir = storage_path('images');
+        // $carImagesDir = storage_path('/storage/images');
+
+        if (!File::exists($carImagesDir)) {
+            File::makeDirectory($carImagesDir);
+        }
+
         $makes = ['Toyota', 'Hyundai', 'Nissan', 'Honda', 'Mitsubishi']; // Common makes in Ethiopia
         $models = ['Corolla', 'Tucson', 'Sunny', 'Civic', 'L200']; // Common models
-        $locations = ['Addis Ababa', 'Jimma', 'Dire Dawa', 'Hawassa', 'Mekelle', 'Bahir Dar']; // Ethiopian cities
+        $locations = ['Addis Ababa', 'Jimma', 'Dire Dawa', 'Mekelle', 'Bahir Dar']; // Ethiopian cities
         $conditions = ['new', 'used', 'refurbished'];
         $transmissions = ['manual', 'automatic'];
         $fuelTypes = ['electric', 'gas', 'diesel']; // electric, gas and diesel
@@ -36,7 +45,10 @@ class CarFactory extends Factory
         return [
             'name' => $this->faker->randomElement($makes) . ' ' . $this->faker->randomElement($models),
             'description' => $this->faker->randomElement($descriptions), // Use realistic descriptions
-            'images' => json_encode([$this->faker->imageUrl(640, 480, 'vehicles', true)]), // Fake image URL
+            // 'images' => json_encode([$this->faker->imageUrl(640, 480, 'vehicles', true)]), // Fake image URL
+            // 'images' => $this->faker->image(storage_path('images'), 640, 480, null, false), // Fake image URL
+            'images' => 'images/' . $this->faker->image(storage_path('app/images'), 640, 480),
+
             'price' => $this->faker->numberBetween(300000, 5000000), // Prices in Ethiopian Birr (ETB)
             'fuel_type' => $this->faker->randomElement($fuelTypes),
             'seating_capacity' => $this->faker->randomElement([5, 7, 8]),
@@ -49,7 +61,7 @@ class CarFactory extends Factory
             'location' => $this->faker->randomElement($locations),
             'four_wheel_drive' => $this->faker->boolean(30), // 30% chance for 4WD (useful for Ethiopian terrain)
             'mileage' => $this->faker->optional()->numberBetween(1000, 150000), // Kilometers
-            'owner_id' => User::factory(['role' => 'seller'])->create()->id, // Assume a user exists or create one
+            'owner_id' => User::factory()->create()->id, // Assume a user exists or create one
             'embedding' => null, // Embeddings will be generated later via the model
             'created_at' => fake()->dateTimeBetween('-12 months', '-1 days'),
         ];
