@@ -26,6 +26,6 @@ class DatabaseSeeder extends Seeder
         Car::factory(50)->create();
 
         // Optionally, you can generate embeddings for all cars after creation
-        // Car::all()->each->updateEmbedding();
+        Car::all()->each->updateEmbedding();
     }
 }

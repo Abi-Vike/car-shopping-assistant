@@ -53,7 +53,7 @@ class Car extends Resource
             Text::make('Name'),
             Textarea::make('Description'),
             Image::make('Images')->disk('public')->path('cars'),
-            Currency::make('Price', 'price')->currency('ETB'), // Ethiopian Birr
+            Currency::make('Price', 'price')->currency('ETB')->sortable(), // Ethiopian Birr
             Select::make('Fuel Type', 'fuel_type')->options(['electric' => 'Electric', 'gas' => 'Gas', 'diesel' => 'Diesel']),
             Number::make('Seating Capacity', 'seating_capacity'),
             Text::make('Make'),

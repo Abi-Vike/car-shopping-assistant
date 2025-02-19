@@ -31,6 +31,10 @@ class Car extends Model
         'embedding'
     ];
 
+    protected $casts = [
+        'embedding' => 'array', // Cast the embedding column to an array
+    ];
+
     public function owner()
     {
         return $this->belongsTo(User::class, 'owner_id');
@@ -38,16 +42,29 @@ class Car extends Model
 
     public static function generateEmbedding($text)
     {
-        $apiKey = env('GEMINI_API_KEY');
-        $response = Http::withHeaders([
-            'Authorization' => "Bearer {$apiKey}",
-        ])->post('https://api.gemini.ai/v1/embeddings', [
-            'input' => $text,
-            'model' => 'text-embedding-004',
-        ]);
+        $apiKey = env('GEMINI_API_KEY', 'AIzaSyDi_ciQSTp_U6l40wesaZKinXhb01lZuV4'); // Ensure this is in your .env file
+
+        $response = Http::withOptions(['verify' => false]) // Disable SSL verification
+            ->post("https://generativelanguage.googleapis.com/v1beta/models/text-embedding-004:embedContent?key={$apiKey}", [
+                'model' => 'models/text-embedding-004',
+                'content' => [
+                    'parts' => [
+                        [
+                            'text' => $text // Explicitly sending text as per your documentation
+                        ]
+                    ]
+                ]
+            ]);
 
         if ($response->successful()) {
-            return $response->json()['embedding'];
+            $data = $response->json();
+            if (isset($data['embedding']['values'])) {
+                return $data['embedding']['values'];
+            } elseif (isset($data['embeddings'][0]['values'])) {
+                return $data['embeddings'][0]['values']; // Adjust based on actual response structure
+            } else {
+                throw new \Exception('Unexpected response structure from Gemini API: ' . json_encode($data));
+            }
         }
 
         throw new \Exception('Failed to generate embedding: ' . $response->body());
