@@ -1,6 +1,8 @@
 <template>
+
+    <Head title="Car Shopping Assistance" />
     <div class="h-full flex items-center justify-center bg-gray-100 py-6 px-4 sm:px-6 lg:px-8">
-        <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+        <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-4xl">
             <h1 class="text-2xl font-bold text-center text-gray-800 mb-6">Find Your Car in Ethiopia</h1>
 
             <form @submit.prevent="searchCars" class="space-y-6">
@@ -64,34 +66,31 @@
     </div>
 </template>
 
-<script>
-export default {
-    data() {
-        return {
-            query: '',
-            location: '',
-            fuelType: '',
-            cars: [],
+<script setup>
+import { ref } from 'vue';
+import { Head } from '@inertiajs/vue3';
+import axios from 'axios';
+
+const query = ref('');
+const location = ref('');
+const fuelType = ref('');
+const cars = ref([]);
+
+const searchCars = async () => {
+    try {
+        if (!query.value) {
+            console.error('Please enter a search query');
+            return;
+        }
+        const params = {
+            query: query.value,
+            location: location.value,
+            fuel_type: fuelType.value,
         };
-    },
-    methods: {
-        async searchCars() {
-            try {
-                if (!this.query) {
-                    console.error('Please enter a search query');
-                    return;
-                }
-                const params = {
-                    query: this.query,
-                    location: this.location,
-                    fuel_type: this.fuelType,
-                };
-                const response = await axios.get('/api/cars/search', { params });
-                this.cars = response.data.cars;
-            } catch (error) {
-                console.error('Error searching cars:', error.response.data);
-            }
-        },
-    },
+        const response = await axios.get('/api/cars/search', { params });
+        cars.value = response.data.cars;
+    } catch (error) {
+        console.error('Error searching cars:', error.response?.data || error);
+    }
 };
 </script>

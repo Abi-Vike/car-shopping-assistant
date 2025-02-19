@@ -25,9 +25,6 @@ class DatabaseSeeder extends Seeder
         // Create 50 sample cars
         Car::factory(50)->create();
 
-        // Car::factory(25)->create(['role' => 'seller']);
-        // Car::factory(25)->create(['role' => 'buyer']);
-
         // Optionally, you can generate embeddings for all cars after creation
         Car::all()->each->updateEmbedding();
     }

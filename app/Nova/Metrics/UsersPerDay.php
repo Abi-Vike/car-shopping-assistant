@@ -16,7 +16,7 @@ class UsersPerDay extends Trend
      */
     public function calculate(NovaRequest $request): TrendResult
     {
-        return $this->countByDays($request, User::class);
+        return $this->countByDays($request, User::class)->showSumValue();
     }
 
     /**
