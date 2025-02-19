@@ -1,6 +1,11 @@
 # Car Shopping Assistant
 
 An AI-powered car shopping assistant tailored for the Ethiopian market, using Laravel, Vue.js, Laravel Nova, and the Gemini API to provide efficient, embedding-based searches for buyers and sellers.
+![Search Cars](https://github.com/user-attachments/assets/74ab053f-ac32-46d4-9985-92cd8c2272f1)
+![Dashboard](https://github.com/user-attachments/assets/2f74f57e-fd80-4321-8e6c-808547fa9845)
+![User List](https://github.com/user-attachments/assets/f85ce2db-862f-41a6-aebe-19b31acda7fa)
+![Car List](https://github.com/user-attachments/assets/be8ee841-c24d-4615-81e3-4a0675badb22)
+
 
 
 ## Overview
