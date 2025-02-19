@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Fortify\Features;
 use Laravel\Nova\Nova;
@@ -18,6 +19,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
         parent::boot();
 
         //
+        Nova::footer(fn() => Blade::render('nova/footer'));
     }
 
     /**
