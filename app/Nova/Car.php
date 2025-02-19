@@ -28,6 +28,8 @@ class Car extends Resource
 
     public static $policy = Policies\CarPolicy::class;
 
+    public static $tableStyle = 'tight';
+
     /**
      * The single value that should be used to represent the resource when being displayed.
      *

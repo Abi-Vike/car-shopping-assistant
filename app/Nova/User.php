@@ -33,6 +33,8 @@ class User extends Resource
      */
     public static $title = 'name';
 
+    public static $tableStyle = 'tight';
+
     /**
      * The columns that should be searched.
      *
