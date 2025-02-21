@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Providers;
 
 use App\Models\User;
@@ -9,7 +11,7 @@ use Laravel\Fortify\Features;
 use Laravel\Nova\Nova;
 use Laravel\Nova\NovaApplicationServiceProvider;
 
-class NovaServiceProvider extends NovaApplicationServiceProvider
+final class NovaServiceProvider extends NovaApplicationServiceProvider
 {
     /**
      * Bootstrap any application services.
@@ -19,7 +21,27 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
         parent::boot();
 
         //
-        Nova::footer(fn() => Blade::render('nova/footer'));
+        Nova::footer(fn () => Blade::render('nova/footer'));
+    }
+
+    /**
+     * Get the tools that should be listed in the Nova sidebar.
+     *
+     * @return array<int, \Laravel\Nova\Tool>
+     */
+    public function tools(): array
+    {
+        return [];
+    }
+
+    /**
+     * Register any application services.
+     */
+    public function register(): void
+    {
+        parent::register();
+
+        //
     }
 
     /**
@@ -72,25 +94,5 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
         return [
             new \App\Nova\Dashboards\Main,
         ];
-    }
-
-    /**
-     * Get the tools that should be listed in the Nova sidebar.
-     *
-     * @return array<int, \Laravel\Nova\Tool>
-     */
-    public function tools(): array
-    {
-        return [];
-    }
-
-    /**
-     * Register any application services.
-     */
-    public function register(): void
-    {
-        parent::register();
-
-        //
     }
 }
