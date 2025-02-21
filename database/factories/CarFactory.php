@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
 use App\Models\User;
@@ -9,7 +11,7 @@ use Illuminate\Support\Facades\File;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Car>
  */
-class CarFactory extends Factory
+final class CarFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -22,7 +24,7 @@ class CarFactory extends Factory
         $carImagesDir = storage_path('images');
         // $carImagesDir = storage_path('/storage/images');
 
-        if (!File::exists($carImagesDir)) {
+        if (! File::exists($carImagesDir)) {
             File::makeDirectory($carImagesDir);
         }
 
@@ -35,19 +37,19 @@ class CarFactory extends Factory
 
         // Realistic descriptions for testing embeddings
         $descriptions = [
-            "A well-maintained " . $this->faker->randomElement($makes) . " " . $this->faker->randomElement($models) . " available in " . $this->faker->randomElement($locations) . ". Features include " . $this->faker->randomElement($transmissions) . " transmission, " . $this->faker->randomElement($fuelTypes) . " engine, and suitable for Ethiopian roads. Low mileage, perfect for families.",
-            "Imported " . $this->faker->randomElement($makes) . " " . $this->faker->randomElement($models) . " in excellent condition, located in " . $this->faker->randomElement($locations) . ". " . $this->faker->randomElement($conditions) . ", with " . $this->faker->numberBetween(1000, 150000) . " km mileage, " . $this->faker->randomElement($fuelTypes) . " fuel type, and four-wheel drive for rough terrains.",
-            "Affordable " . $this->faker->randomElement($makes) . " " . $this->faker->randomElement($models) . " for sale in " . $this->faker->randomElement($locations) . ". " . $this->faker->randomElement($conditions) . " condition, " . $this->faker->randomElement($transmissions) . " transmission, ideal for city driving and long trips in Ethiopia.",
-            "High-quality " . $this->faker->randomElement($makes) . " " . $this->faker->randomElement($models) . " with " . $this->faker->randomElement($fuelTypes) . " engine, located in " . $this->faker->randomElement($locations) . ". New model, low mileage, and equipped for Ethiopian road conditions.",
-            "Used but reliable " . $this->faker->randomElement($makes) . " " . $this->faker->randomElement($models) . " in " . $this->faker->randomElement($locations) . ". Features " . $this->faker->randomElement($transmissions) . " transmission, " . $this->faker->randomElement($fuelTypes) . " fuel, and is perfect for commercial use in Ethiopia."
+            'A well-maintained '.$this->faker->randomElement($makes).' '.$this->faker->randomElement($models).' available in '.$this->faker->randomElement($locations).'. Features include '.$this->faker->randomElement($transmissions).' transmission, '.$this->faker->randomElement($fuelTypes).' engine, and suitable for Ethiopian roads. Low mileage, perfect for families.',
+            'Imported '.$this->faker->randomElement($makes).' '.$this->faker->randomElement($models).' in excellent condition, located in '.$this->faker->randomElement($locations).'. '.$this->faker->randomElement($conditions).', with '.$this->faker->numberBetween(1000, 150000).' km mileage, '.$this->faker->randomElement($fuelTypes).' fuel type, and four-wheel drive for rough terrains.',
+            'Affordable '.$this->faker->randomElement($makes).' '.$this->faker->randomElement($models).' for sale in '.$this->faker->randomElement($locations).'. '.$this->faker->randomElement($conditions).' condition, '.$this->faker->randomElement($transmissions).' transmission, ideal for city driving and long trips in Ethiopia.',
+            'High-quality '.$this->faker->randomElement($makes).' '.$this->faker->randomElement($models).' with '.$this->faker->randomElement($fuelTypes).' engine, located in '.$this->faker->randomElement($locations).'. New model, low mileage, and equipped for Ethiopian road conditions.',
+            'Used but reliable '.$this->faker->randomElement($makes).' '.$this->faker->randomElement($models).' in '.$this->faker->randomElement($locations).'. Features '.$this->faker->randomElement($transmissions).' transmission, '.$this->faker->randomElement($fuelTypes).' fuel, and is perfect for commercial use in Ethiopia.',
         ];
 
         return [
-            'name' => $this->faker->randomElement($makes) . ' ' . $this->faker->randomElement($models),
+            'name' => $this->faker->randomElement($makes).' '.$this->faker->randomElement($models),
             'description' => $this->faker->randomElement($descriptions), // Use realistic descriptions
             // 'images' => json_encode([$this->faker->imageUrl(640, 480, 'vehicles', true)]), // Fake image URL
             // 'images' => $this->faker->image(storage_path('images'), 640, 480, null, false), // Fake image URL
-            'images' => 'images/' . $this->faker->image(storage_path('app/images'), 640, 480),
+            'images' => 'images/'.$this->faker->image(storage_path('app/images'), 640, 480),
 
             'price' => $this->faker->numberBetween(300000, 5000000), // Prices in Ethiopian Birr (ETB)
             'fuel_type' => $this->faker->randomElement($fuelTypes),
