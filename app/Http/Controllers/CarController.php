@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Models\Car;
+use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
 
-class CarController extends Controller
+final class CarController extends Controller
 {
     public function store(Request $request)
     {
@@ -47,24 +49,25 @@ class CarController extends Controller
 
         // Calculate similarity
         $similarCars = $cars->map(function ($car) use ($queryEmbedding) {
-            if (!$car->embedding || !is_array($car->embedding)) {
+            if (! $car->embedding || ! is_array($car->embedding)) {
                 return null; // Skip cars without valid embeddings
             }
 
             $similarity = $this->cosineSimilarity($queryEmbedding, $car->embedding);
+
             return ['car' => $car, 'similarity' => $similarity];
         })->filter()->sortByDesc('similarity')->take(10)->values();
 
         // Filter by Ethiopia-specific criteria if provided
         if ($request->filled('location') && $request->input('location') !== '') {
             $similarCars = $similarCars->filter(function ($item) use ($request) {
-                return strtolower($item['car']->location) === strtolower($request->input('location'));
+                return mb_strtolower($item['car']->location) === mb_strtolower($request->input('location'));
             });
         }
 
         if ($request->filled('fuel_type') && $request->input('fuel_type') !== '') {
             $similarCars = $similarCars->filter(function ($item) use ($request) {
-                return strtolower($item['car']->fuel_type) === strtolower($request->input('fuel_type'));
+                return mb_strtolower($item['car']->fuel_type) === mb_strtolower($request->input('fuel_type'));
             });
         }
 
@@ -78,8 +81,8 @@ class CarController extends Controller
         $vec2 = is_string($vec2) ? json_decode($vec2, true) : (array) $vec2;
 
         // Ensure both are arrays
-        if (!is_array($vec1) || !is_array($vec2)) {
-            throw new \Exception('Invalid embedding format: vectors must be arrays');
+        if (! is_array($vec1) || ! is_array($vec2)) {
+            throw new Exception('Invalid embedding format: vectors must be arrays');
         }
 
         // Pad or truncate vectors to ensure they have the same length
@@ -99,7 +102,9 @@ class CarController extends Controller
             return $x * $x;
         }, $vec2)));
 
-        if ($magnitude1 * $magnitude2 == 0) return 0;
+        if ($magnitude1 * $magnitude2 === 0) {
+            return 0;
+        }
 
         return $dotProduct / ($magnitude1 * $magnitude2);
     }
