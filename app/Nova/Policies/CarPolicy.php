@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Nova\Policies;
 
 use App\Models\User;
 use App\Nova\Resource;
-use Illuminate\Auth\Access\Response;
 
-class CarPolicy
+final class CarPolicy
 {
     /**
      * Determine whether the user can view any models.

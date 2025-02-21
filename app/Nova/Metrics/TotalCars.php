@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Nova\Metrics;
 
 use App\Models\Car;
@@ -9,7 +11,7 @@ use Laravel\Nova\Metrics\Value;
 use Laravel\Nova\Metrics\ValueResult;
 use Laravel\Nova\Nova;
 
-class TotalCars extends Value
+final class TotalCars extends Value
 {
     /**
      * Calculate the value of the metric.
@@ -40,7 +42,7 @@ class TotalCars extends Value
     /**
      * Determine the amount of time the results of the metric should be cached.
      */
-    public function cacheFor(): DateTimeInterface|null
+    public function cacheFor(): ?DateTimeInterface
     {
         // return now()->addMinutes(5);
 

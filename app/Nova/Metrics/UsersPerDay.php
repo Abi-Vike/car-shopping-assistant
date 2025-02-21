@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Nova\Metrics;
 
 use App\Models\User;
@@ -9,7 +11,7 @@ use Laravel\Nova\Metrics\Trend;
 use Laravel\Nova\Metrics\TrendResult;
 use Laravel\Nova\Nova;
 
-class UsersPerDay extends Trend
+final class UsersPerDay extends Trend
 {
     /**
      * Calculate the value of the metric.
@@ -36,7 +38,7 @@ class UsersPerDay extends Trend
     /**
      * Determine the amount of time the results of the metric should be cached.
      */
-    public function cacheFor(): DateTimeInterface|null
+    public function cacheFor(): ?DateTimeInterface
     {
         // return now()->addMinutes(5);
 

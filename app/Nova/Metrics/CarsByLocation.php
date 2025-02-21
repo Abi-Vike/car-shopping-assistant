@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Nova\Metrics;
 
 use App\Models\Car;
@@ -8,7 +10,7 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Metrics\Partition;
 use Laravel\Nova\Metrics\PartitionResult;
 
-class CarsByLocation extends Partition
+final class CarsByLocation extends Partition
 {
     /**
      * Calculate the value of the metric.
@@ -24,7 +26,7 @@ class CarsByLocation extends Partition
     /**
      * Determine the amount of time the results of the metric should be cached.
      */
-    public function cacheFor(): DateTimeInterface|null
+    public function cacheFor(): ?DateTimeInterface
     {
         // return now()->addMinutes(5);
 

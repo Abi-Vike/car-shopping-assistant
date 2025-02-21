@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Nova;
 
 use Illuminate\Contracts\Database\Eloquent\Builder;
@@ -12,7 +14,7 @@ abstract class Resource extends NovaResource
     /**
      * Build an "index" query for the given resource.
      */
-    public static function indexQuery(NovaRequest $request, Builder $query): Builder
+    final public static function indexQuery(NovaRequest $request, Builder $query): Builder
     {
         return $query;
     }
@@ -20,7 +22,7 @@ abstract class Resource extends NovaResource
     /**
      * Build a Scout search query for the given resource.
      */
-    public static function scoutQuery(NovaRequest $request, ScoutBuilder $query): ScoutBuilder
+    final public static function scoutQuery(NovaRequest $request, ScoutBuilder $query): ScoutBuilder
     {
         return $query;
     }
@@ -28,7 +30,7 @@ abstract class Resource extends NovaResource
     /**
      * Build a "detail" query for the given resource.
      */
-    public static function detailQuery(NovaRequest $request, Builder $query): Builder
+    final public static function detailQuery(NovaRequest $request, Builder $query): Builder
     {
         return parent::detailQuery($request, $query);
     }
@@ -38,7 +40,7 @@ abstract class Resource extends NovaResource
      *
      * This query determines which instances of the model may be attached to other resources.
      */
-    public static function relatableQuery(NovaRequest $request, Builder $query): Builder
+    final public static function relatableQuery(NovaRequest $request, Builder $query): Builder
     {
         return parent::relatableQuery($request, $query);
     }

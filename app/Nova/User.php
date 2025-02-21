@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Nova;
 
 use App\Nova\Metrics\UsersByRole;
@@ -15,7 +17,7 @@ use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class User extends Resource
+final class User extends Resource
 {
     use PasswordValidationRules;
 

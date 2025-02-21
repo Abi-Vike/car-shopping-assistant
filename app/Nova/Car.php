@@ -1,23 +1,24 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Nova;
 
 use App\Nova\Metrics\CarsByFuelType;
 use App\Nova\Metrics\CarsByLocation;
 use App\Nova\Metrics\TotalCars;
-use Illuminate\Http\Request;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Boolean;
+use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Image;
+use Laravel\Nova\Fields\Number;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Textarea;
-use Laravel\Nova\Fields\Number;
-use Laravel\Nova\Fields\Image;
-use Laravel\Nova\Fields\Select;
-use Laravel\Nova\Fields\Boolean;
-use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Car extends Resource
+final class Car extends Resource
 {
     /**
      * The model the resource corresponds to.
